@@ -32,9 +32,13 @@ public final class JavaDirectKafkaWordCount {
     private static final Pattern SPACE = Pattern.compile(" ");
 
     public static void main(String[] args) throws InterruptedException {
-        // $KAFKA_HOME/bin/zookeeper-server-start.sh /Users/Zhang_Kevin/Desktop/kafka_2.11-0.10.0.1/config/zookeeper.properties
-        // $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
-        // $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic spark-streaming-test
+        /*  
+           1 $KAFKA_HOME/bin/zookeeper-server-start.sh /Users/Zhang_Kevin/Desktop/kafka_2.11-0.10.0.1/config/zookeeper.properties
+           2 $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
+           3 $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic spark-streaming-test
+           4 run this java class 
+           5 $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic spark-streaming-test
+         */
         String brokers = "localhost:9092";
         String topics = "spark-streaming-test";
 
