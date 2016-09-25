@@ -4,8 +4,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Properties;
 import java.util.regex.Pattern;
 
+import kafka.javaapi.producer.Producer;
+import kafka.producer.KeyedMessage;
+import kafka.producer.ProducerConfig;
 import kafka.serializer.StringDecoder;
 
 import org.apache.spark.SparkConf;
@@ -40,7 +44,7 @@ public final class JavaDirectKafkaWordCount {
            5 $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic spark-streaming-test
          */
         String brokers = "localhost:9092";
-        String topics = "spark-streaming-test";
+        String topics = "nihao";
 
         // Create context with 2 second batch interval
         SparkConf sparkConf = new SparkConf().setAppName("JavaDirectKafkaWordCount").setMaster("local");
@@ -78,10 +82,27 @@ public final class JavaDirectKafkaWordCount {
                 return i1 + i2;
             }
         });
+        
+        sendMessage();
+        
         wordCounts.print();
 
         // Start the computation
         jssc.start();
         jssc.awaitTermination();
     }
+
+    private static void sendMessage() {
+        Properties props = new Properties();  
+        props.put("metadata.broker.list", "localhost:9092");
+        props.put("serializer.class","kafka.serializer.StringEncoder");
+        
+        ProducerConfig producerConfig = new ProducerConfig(props);
+        Producer<String,String> producer = new Producer<>(producerConfig);
+        String topic = "nihao";
+        KeyedMessage<String,String> message = new <String,String>KeyedMessage(topic, "Java Direct Kafka Word Count Direct Kafka Word Count");
+        producer.send(message);
+        producer.close();
+    }
+
 }
